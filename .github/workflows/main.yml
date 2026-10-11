@@ -1,0 +1,26 @@
+name: F05 Verilog Simulation
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  simulation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Icarus Verilog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog
+
+      - name: Compile F05
+        run: iverilog -g2012 -o sim F05.v tb.v
+
+      - name: Run simulation
+        run: vvp sim
