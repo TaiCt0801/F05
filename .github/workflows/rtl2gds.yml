@@ -47,7 +47,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           set -o pipefail
-          python -m librelane --dockerized --docker-no-tty config.json 2>&1 | tee librelane.log
+          python -m librelane --docker-no-tty --dockerized config.json 2>&1 | tee librelane.log
 
       - name: List generated files
         if: always()
