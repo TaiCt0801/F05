@@ -1,0 +1,24 @@
+      - name: Run LibreLane
+        working-directory: rtl2gds
+        run: |
+          ../.venv/bin/python -m librelane --dockerized config.json
+
+      - name: Check for GDS output
+        if: always()
+        run: |
+          find rtl2gds -type f \( -name "*.gds" -o -name "*.log" \) -print
+          if [ "${{ job.status }}" = "success" ]; then
+            if ! find rtl2gds -type f -name "*.gds" -print -quit | grep -q .; then
+              echo "ERROR: Flow succeeded but no GDS file was found."
+              exit 1
+            fi
+          fi
+
+      - name: Upload RTL-to-GDS results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: F05-rtl2gds-results
+          path: rtl2gds/runs/
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,7 @@
+{
+  "DESIGN_NAME": "F05",
+  "VERILOG_FILES": ["dir::src/F05.v"],
+  "CLOCK_PORT": "clk",
+  "CLOCK_PERIOD": 20,
+  "PDK": "sky130A"
+}
